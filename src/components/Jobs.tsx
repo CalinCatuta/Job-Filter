@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Job from "./Job";
 
 import jobsData from "../db/data.json";
 
@@ -37,7 +36,37 @@ const Jobs = () => {
         </div>
         <div className="card__container">
           {jobs.map((job) => (
-            <Job key={job.id} job={job} />
+            <div key={job.id} className="card card--feature">
+              <img src={job.logo} className="card_logo" />
+              <div className="card__body">
+                <div className="card__top">
+                  <span>{job.company}</span>
+                  <span className="tag__container">
+                    {job.new && <span className="tag tag--new">New</span>}
+                    {job.featured && (
+                      <span className="tag tag--featured">Featured</span>
+                    )}
+                  </span>
+                </div>
+                <h1 className="card__header">{job.position}</h1>
+                <div className="card__detail">
+                  <span>{job.postedAt}</span>
+                  <span className="circle"></span>
+                  <span>{job.contract}</span>
+                  <span className="circle"></span>
+                  <span>{job.location}</span>
+                </div>
+              </div>
+              <div className="filter__container">
+                <span className="filter">{job.role}</span>
+                <span className="filter">{job.level}</span>
+                {job.languages.map((lang) => (
+                  <span className="filter" key={lang}>
+                    {lang}
+                  </span>
+                ))}
+              </div>
+            </div>
           ))}
         </div>
       </main>
