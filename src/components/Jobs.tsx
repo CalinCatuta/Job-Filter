@@ -20,11 +20,17 @@ type Jobs = {
 
 const Jobs = () => {
   const [jobs, setJobs] = useState<Jobs>([]);
+  const [filterSelected, setFilterSelected] = useState<string[]>([]);
 
   useEffect(() => {
     setJobs(jobsData);
   }, []);
-
+  function selectFilterHan(e: React.MouseEvent<HTMLDivElement>) {
+    if (e.target instanceof HTMLSpanElement) {
+      const selectedText: string = e.target.textContent || "";
+      setFilterSelected([...filterSelected, selectedText]);
+    }
+  }
   return (
     <div>
       <header></header>
@@ -57,7 +63,7 @@ const Jobs = () => {
                   <span>{job.location}</span>
                 </div>
               </div>
-              <div className="filter__container">
+              <div onClick={selectFilterHan} className="filter__container">
                 <span className="filter">{job.role}</span>
                 <span className="filter">{job.level}</span>
                 {job.languages.map((lang) => (
@@ -65,6 +71,12 @@ const Jobs = () => {
                     {lang}
                   </span>
                 ))}
+                {job.tools &&
+                  job.tools.map((tool) => (
+                    <span className="filter" key={tool}>
+                      {tool}
+                    </span>
+                  ))}
               </div>
             </div>
           ))}
