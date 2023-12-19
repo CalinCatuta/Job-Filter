@@ -36,8 +36,21 @@ const Jobs = () => {
       <header></header>
 
       <main>
-        <div className="header-content invisible">
-          <div className="job-filter__container"></div>
+        <div
+          className={`header-content ${
+            filterSelected.length === 0 ? "invisible" : ""
+          }`}
+        >
+          <div className="job-filter__container">
+            {filterSelected &&
+              filterSelected.map((filter) => (
+                <span className="job-filter">
+                  {" "}
+                  {filter}
+                  <button className="remove-filter-btn"></button>
+                </span>
+              ))}
+          </div>
           <button className="clear-btn">Clear</button>
         </div>
         <div className="card__container">
