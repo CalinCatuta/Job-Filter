@@ -28,7 +28,9 @@ const Jobs = () => {
   function selectFilterHan(e: React.MouseEvent<HTMLDivElement>) {
     if (e.target instanceof HTMLSpanElement) {
       const selectedText: string = e.target.textContent || "";
-      setFilterSelected([...filterSelected, selectedText]);
+      if (!filterSelected.includes(selectedText)) {
+        setFilterSelected([...filterSelected, selectedText]);
+      }
     }
   }
   return (
