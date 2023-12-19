@@ -1,4 +1,5 @@
-import { Jobs } from "./components/Jobs";
+import Jobs from "./components/Jobs";
+
 import "./sass/app.scss";
 function App() {
   return (

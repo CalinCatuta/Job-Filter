@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import Job from "./Job";
 
 import jobsData from "../db/data.json";
+
 type Jobs = {
   id: number;
   company: string;
@@ -17,7 +19,7 @@ type Jobs = {
   tools?: string[];
 }[];
 
-export const Jobs = () => {
+const Jobs = () => {
   const [jobs, setJobs] = useState<Jobs>([]);
 
   useEffect(() => {
@@ -35,32 +37,12 @@ export const Jobs = () => {
         </div>
         <div className="card__container">
           {jobs.map((job) => (
-            <div className="card card--feature">
-              <img src={job.logo} className="card_logo" />
-              <div className="card__body">
-                <div className="card__top">
-                  <span></span>
-                  <span className="tag__container">
-                    <span className="tag tag--new"></span>
-                    <span className="tag tag--featured"></span>
-                  </span>
-                </div>
-                <h1 className="card__header"></h1>
-                <div className="card__detail">
-                  <span></span>
-                  <span className="circle"></span>
-                  <span></span>
-                  <span className="circle"></span>
-                  <span></span>
-                </div>
-              </div>
-              <div className="filter__container">
-                <span className="filter"></span>
-              </div>
-            </div>
+            <Job key={job.id} job={job} />
           ))}
         </div>
       </main>
     </div>
   );
 };
+
+export default Jobs;
