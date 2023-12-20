@@ -25,6 +25,10 @@ const Jobs = () => {
   useEffect(() => {
     setJobs(jobsData);
   }, []);
+  useEffect(() => {
+    setJobs(filterCompanies());
+  }, [filterSelected]);
+
   function selectFilterHan(e: React.MouseEvent<HTMLDivElement>) {
     if (e.target instanceof HTMLSpanElement) {
       const selectedText: string = e.target.textContent || "";
@@ -33,6 +37,38 @@ const Jobs = () => {
       }
     }
   }
+  function removeFilterHan(e: React.MouseEvent<HTMLButtonElement>) {
+    if (e.target instanceof HTMLButtonElement) {
+      const parentElement = e.target.parentElement;
+
+      if (parentElement) {
+        const selectedText: string = parentElement.textContent || "";
+
+        if (filterSelected.includes(selectedText)) {
+          // Create a new array without the selected text
+          // Update the state with the new array
+          setFilterSelected(
+            filterSelected.filter((item) => item !== selectedText)
+          );
+        }
+      }
+    }
+  }
+
+  const filterCompanies = () => {
+    let companies = jobsData;
+    // for each tag in state filter the Data to check wich object have the tag and we do the forEach bcs we need to make this filter for every tag if we add or remove one
+    filterSelected.forEach((tag) => {
+      companies = companies.filter(
+        (data) =>
+          data.role === tag ||
+          data.level === tag ||
+          data.languages.includes(tag) ||
+          data.tools.includes(tag)
+      );
+    });
+    return companies;
+  };
   return (
     <div>
       <header></header>
@@ -46,14 +82,19 @@ const Jobs = () => {
           <div className="job-filter__container">
             {filterSelected &&
               filterSelected.map((filter) => (
-                <span className="job-filter">
-                  {" "}
+                <span
+                  key={filter}
+                  onClick={removeFilterHan}
+                  className="job-filter"
+                >
                   {filter}
                   <button className="remove-filter-btn"></button>
                 </span>
               ))}
           </div>
-          <button className="clear-btn">Clear</button>
+          <button onClick={() => setFilterSelected([])} className="clear-btn">
+            Clear
+          </button>
         </div>
         <div className="card__container">
           {jobs.map((job) => (
