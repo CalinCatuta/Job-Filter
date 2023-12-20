@@ -25,6 +25,7 @@ const Jobs = () => {
   useEffect(() => {
     setJobs(jobsData);
   }, []);
+  // every time there is a change in filterSelected state change the jobs state and invoce the filterCompanies agane.
   useEffect(() => {
     setJobs(filterCompanies());
   }, [filterSelected]);
